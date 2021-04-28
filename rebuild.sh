@@ -15,3 +15,9 @@ then
 	docker push alessandrolanni/php7.4-apache-custom
 fi
 
+if [ "$1" = "php-rabbit-consumer" ] || [ "$1" = "all" ]
+then
+	echo "Rebuild php-rabbit-consumer"
+        docker build --tag=alessandrolanni/php-rabbit-consumer ./php-rabbit-consumer
+        docker push alessandrolanni/php-rabbit-consumer
+fi
