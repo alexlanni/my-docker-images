@@ -20,6 +20,8 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+RUN docker-php-ext-install sockets
+
 # User management: we'll use the same UID/GID og the host machine
 RUN groupadd -g 1000 webapp
 RUN useradd -u 1000 -g webapp  webapp
