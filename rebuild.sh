@@ -15,6 +15,13 @@ then
 	docker push alessandrolanni/php7.4-apache-custom
 fi
 
+if [ "$1" = "php8.0-apache-custom" ] || [ "$1" = "all" ]
+then
+        echo "Rebuild php8.0-apache-custom"
+        docker build --tag=alessandrolanni/php8.0-apache-custom ./php/8.0-apache-custom
+        docker push alessandrolanni/php8.0-apache-custom
+fi
+
 if [ "$1" = "php-rabbit-consumer" ] || [ "$1" = "all" ]
 then
 	echo "Rebuild php-rabbit-consumer"
