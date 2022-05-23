@@ -28,3 +28,10 @@ then
         docker build --tag=alessandrolanni/php-rabbit-consumer ./php-rabbit-consumer
         docker push alessandrolanni/php-rabbit-consumer
 fi
+
+if [ "$1" = "php8.1-apache-custom" ] || [ "$1" = "all" ]
+then
+        echo "Rebuild php8.1-apache-custom"
+        docker build --tag=alessandrolanni/php8.1-apache-custom ./php/8.1-apache-custom
+        docker push alessandrolanni/php8.1-apache-custom
+fi
