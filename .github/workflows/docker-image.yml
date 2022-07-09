@@ -24,6 +24,7 @@ jobs:
       run: docker context create builder-context
     - name: Build the Docker buildx
       run: | 
+        docker run --privileged --rm tonistiigi/binfmt --install arm64 | true
         docker buildx ls
         docker buildx create --name builderx --driver docker-container --use builder-context
     - name: Build the image
