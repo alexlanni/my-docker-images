@@ -20,5 +20,13 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    - name: Build the Docker image
-      run: bash ./rebuild.sh all
+    - name: Create context
+      run: docker context create builder-context
+    - name: Build the Docker buildx
+      run: docker buildx create --name builderx --driver docker-container --use builder-context
+    - name: Build the image
+      run: docker buildx build --tag=alessandrolanni/php8.1-apache-custom --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom 
+    - name: Remove Builder
+      run: docker buildx rm builderx
+    - name: Remove Context
+      run: docker context rm builder-context
