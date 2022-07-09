@@ -23,7 +23,8 @@ jobs:
     - name: Create context
       run: docker context create builder-context
     - name: Build the Docker buildx
-      run: docker buildx ls \
+      run: | 
+        docker buildx ls
         docker buildx create --name builderx --driver docker-container --use builder-context
     - name: Build the image
       run: docker buildx build --tag=alessandrolanni/php8.1-apache-custom --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom 
