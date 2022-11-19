@@ -8,6 +8,13 @@ fi
 
 echo "Rebuild images with parameter $1"
 
+if [ "$1" = "node-gulp" ] || [ "$1" = "all" ]
+then
+	echo "Rebuild Node with Gulp"
+	docker build --tag=alessandrolanni/node-gulp ./node/node-gulp
+	docker push alessandrolanni/node-gulp:latest
+fi
+
 if [ "$1" = "php7.4-apache-custom" ] || [ "$1" = "all" ]
 then
 	echo "Rebuild php7.4-apache-custom"
@@ -32,9 +39,5 @@ fi
 if [ "$1" = "php8.1-apache-custom" ] || [ "$1" = "all" ]
 then
         echo "Rebuild php8.1-apache-custom"
-        docker build --tag=alessandrolanni/php8.1-apache-custom ./php/8.1-apache-custom
-        docker push alessandrolanni/php8.1-apache-custom
-
-        docker build --platform linux/arm64 --tag=alessandrolanni/php8.1-apache-custom:arm64 ./php/8.1-apache-custom
-        docker push alessandrolanni/php8.1-apache-custom:arm64
+        docker buildx build --tag=alessandrolanni/php8.1-apache-custom --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom
 fi
