@@ -1,0 +1,35 @@
+name: Node JS with Gulp
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker Login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: Create context
+      run: docker context create builder-context
+    - name: Build the Docker buildx
+      run: | 
+        docker run --privileged --rm tonistiigi/binfmt --install arm64 | true
+        docker buildx ls
+        docker buildx create --name builderx --driver docker-container --use builder-context
+    - name: Build the image
+      run: docker buildx build --tag=alessandrolanni/node-gulp:latest --push --platform=linux/arm64,linux/amd64 ./node/node-gulp
+    - name: Remove Builder
+      run: docker buildx rm builderx
+    - name: Remove Context
+      run: docker context rm builder-context
