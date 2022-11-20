@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: PHP 8.1 custom
 
 on:
   push:
