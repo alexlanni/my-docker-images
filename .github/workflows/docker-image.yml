@@ -29,6 +29,9 @@ jobs:
         docker buildx create --name builderx --driver docker-container --use builder-context
     - name: Build the image
       run: docker buildx build --tag=alessandrolanni/php8.1-apache-custom --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom 
+    - name: Build the image - XDebug
+      run: docker buildx build --tag=alessandrolanni/php8.1-apache-custom-debug --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom-debug
+    
     - name: Remove Builder
       run: docker buildx rm builderx
     - name: Remove Context
