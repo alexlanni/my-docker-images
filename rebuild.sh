@@ -41,3 +41,9 @@ then
         echo "Rebuild php8.1-apache-custom"
         docker buildx build --tag=alessandrolanni/php8.1-apache-custom --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom
 fi
+
+if [ "$1" = "php8.1-apache-custom-debug" ] || [ "$1" = "all" ]
+then
+        echo "Rebuild php8.1-apache-custom-debug"
+        docker buildx build --tag=alessandrolanni/php8.1-apache-custom-debug --push --platform=linux/arm64,linux/amd64 ./php/8.1-apache-custom-debug
+fi
